@@ -1,0 +1,9 @@
+digraph {
+	A [label=an]
+	B [label=example]
+	C [label=of]
+	D [label="graph"]
+	A -> B
+	B -> C
+	C -> D
+}
