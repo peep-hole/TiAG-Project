@@ -21,10 +21,8 @@ public class Test {
         importer.importIt(graph1, file);
         System.out.println(graph1.toString());
 
-
-
-        
-
+        graphExporter exporter = new graphExporter();
+        exporter.exportIt(graph1, "testOutput");
 
     }
 }

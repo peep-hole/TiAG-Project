@@ -2,17 +2,15 @@ package GraphReader;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.nio.dot.DOTImporter;
-
 import java.io.File;
-import java.io.Reader;
+
 
 public class graphImporter {
 
     private final DOTImporter<Vertex, DefaultEdge> importer;
 
-    graphImporter() {
+    public graphImporter() {
 
         importer = new DOTImporter<>();
         importer.addVertexAttributeConsumer((p, attrValue) -> {
