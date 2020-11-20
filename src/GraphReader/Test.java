@@ -1,4 +1,7 @@
 package GraphReader;
+import GraphElements.Vertex;
+import GraphElements.VertexSupplier;
+import GraphExporter.graphExporter;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.builder.GraphTypeBuilder;

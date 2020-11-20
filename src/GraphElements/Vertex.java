@@ -1,4 +1,4 @@
-package GraphReader;
+package GraphElements;
 
 public class Vertex {
 

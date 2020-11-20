@@ -1,5 +1,6 @@
-package GraphReader;
+package GraphExporter;
 
+import GraphElements.Vertex;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.nio.Attribute;
