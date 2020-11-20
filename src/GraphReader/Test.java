@@ -22,7 +22,7 @@ public class Test {
         System.out.println(graph1.toString());
 
         graphExporter exporter = new graphExporter();
-        exporter.exportIt(graph1, "testOutput");
+        exporter.exportIt(graph1, "testOutput.gv");
 
     }
 }
