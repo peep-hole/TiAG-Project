@@ -1,4 +1,4 @@
-package GraphReader;
+package GraphElements;
 
 public class Vertex {
 
@@ -45,7 +45,7 @@ public class Vertex {
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        sb.append("(").append(id);
+        sb.append("(id: ").append(id);
         if (label != null) {
             sb.append(", label: \"").append(label).append("\"");
         }

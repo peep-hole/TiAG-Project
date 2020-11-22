@@ -1,4 +1,4 @@
-package GraphReader;
+package GraphElements;
 
 import java.util.function.Supplier;
 

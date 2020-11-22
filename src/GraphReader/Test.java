@@ -1,4 +1,7 @@
 package GraphReader;
+import GraphElements.Vertex;
+import GraphElements.VertexSupplier;
+import GraphExporter.graphExporter;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.builder.GraphTypeBuilder;
@@ -21,10 +24,8 @@ public class Test {
         importer.importIt(graph1, file);
         System.out.println(graph1.toString());
 
-
-
-        
-
+        graphExporter exporter = new graphExporter();
+        exporter.exportIt(graph1, "testOutput.gv");
 
     }
 }
