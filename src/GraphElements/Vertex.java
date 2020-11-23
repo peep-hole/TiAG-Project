@@ -5,7 +5,7 @@ public class Vertex {
     private Integer id;
     private String label;
 
-    Vertex(Integer id, String label) {
+    public Vertex(Integer id, String label) {
         this.id = id;
         this.label = label;
     }
