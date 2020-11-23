@@ -5,9 +5,9 @@ import org.jgrapht.graph.SimpleGraph;
 import java.util.List;
 import static org.jgrapht.Graphs.neighborListOf;
 
-public class P1 extends Production{
+public class P2 extends Production{
 
-    public P1(SimpleGraph graph, Vertex S) {
+    public P2(SimpleGraph graph, Vertex S) {
         super(graph, S);
     }
 
@@ -22,25 +22,25 @@ public class P1 extends Production{
         int hId = highestId();
         graph.removeVertex(S);
 
-        Vertex newS = new Vertex(sourceId,"Y");
-        Vertex va = new Vertex(hId+1,"a");
-        Vertex vc = new Vertex(hId+2,"c");
-        graph.addEdge(newS,va);
-        graph.addEdge(newS,vc);
+        Vertex newS = new Vertex(sourceId,"X");
+        Vertex vb = new Vertex(hId+1,"a");
+        Vertex vd = new Vertex(hId+2,"c");
+        graph.addEdge(newS,vb);
+        graph.addEdge(newS,vd);
 
         for(Vertex vertex : neighbours){
             switch (vertex.getLabel()){
-                case "a":
-                case "c":
+                case "b":
+                case "d":
                 case "Y":
                     graph.addEdge(newS,vertex);
                     break;
-                case "b":
+                case "a":
                 case "X":
-                    graph.addEdge(vc,vertex);
+                    graph.addEdge(vb,vertex);
                     break;
-                case "d":
-                    graph.addEdge(va,vertex);
+                case "c":
+                    graph.addEdge(vd,vertex);
                     break;
             }
 
