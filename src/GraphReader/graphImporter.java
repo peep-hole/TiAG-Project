@@ -1,8 +1,8 @@
 package GraphReader;
 
 import GraphElements.Vertex;
-import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.nio.dot.DOTImporter;
 import java.io.File;
 
@@ -26,7 +26,7 @@ public class graphImporter {
 
 
 
-    public void importIt (Graph<Vertex, DefaultEdge> graph, File file) {
+    public void importIt (SimpleGraph<Vertex, DefaultEdge> graph, File file) {
         importer.importGraph(graph, file);
     }
 }

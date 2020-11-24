@@ -1,8 +1,8 @@
 package GraphExporter;
 
 import GraphElements.Vertex;
-import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.nio.Attribute;
 import org.jgrapht.nio.DefaultAttribute;
 import org.jgrapht.nio.dot.DOTExporter;
@@ -27,7 +27,7 @@ public class graphExporter {
         });
     }
 
-    public void exportIt(Graph<Vertex,DefaultEdge> graph, String fileName) {
+    public void exportIt(SimpleGraph<Vertex,DefaultEdge> graph, String fileName) {
         exporter.exportGraph(graph, new File(fileName));
     }
 }
