@@ -3,22 +3,19 @@ package Productions;
 import GraphElements.Vertex;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
-
-import java.util.List;
 import java.util.Set;
 
-import static org.jgrapht.Graphs.neighborListOf;
 
 abstract public class Production {
-    private SimpleGraph graph;
-    private Vertex source;
+    private final SimpleGraph<Vertex,DefaultEdge> graph;
+    private final Vertex source;
 
     public Production(SimpleGraph<Vertex, DefaultEdge> graph, Vertex S){
         this.graph = graph;
         this.source = S;
     }
 
-    public SimpleGraph getGraph() {
+    public SimpleGraph<Vertex,DefaultEdge> getGraph() {
         return graph;
     }
 
@@ -30,10 +27,11 @@ abstract public class Production {
 
     public int highestId(){
         int hId = 0;
-        Set<Vertex> verticles = graph.vertexSet();
-        for (Vertex vertex : verticles){
+        Set<Vertex> vertices = graph.vertexSet();
+        for (Vertex vertex : vertices){
             hId = Math.max(hId,vertex.getId());
         }
         return hId;
     }
+
 }

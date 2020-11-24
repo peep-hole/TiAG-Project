@@ -1,9 +1,0 @@
-strict graph G {
-  0 [ label="an" ];
-  1 [ label="example" ];
-  2 [ label="of" ];
-  3 [ label="graph" ];
-  0 -- 1;
-  1 -- 2;
-  2 -- 3;
-}

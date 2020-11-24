@@ -1,5 +1,7 @@
 package GraphElements;
 
+import java.util.Set;
+
 public class Vertex {
 
     private Integer id;
@@ -10,15 +12,15 @@ public class Vertex {
         this.label = label;
     }
 
-    Vertex(Integer id) {
+    public Vertex(Integer id) {
         this(id, null);
     }
-    Vertex() {this(null,null);}
+    public Vertex() {this(null,null);}
 
     @Override
     public int hashCode()
     {
-        return id*7 ;
+        return (id*7);
     }
 
     @Override
@@ -30,7 +32,7 @@ public class Vertex {
         if (!(other instanceof Vertex))
             return false;
         Vertex that = (Vertex) other;
-        return (this.id.equals(that.id));
+        return ((this.id.equals(that.id))&&(this.label.equals(that.label)));
     }
 
     public String getLabel() {
