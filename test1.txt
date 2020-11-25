@@ -1,0 +1,14 @@
+--InitialGraph--
+Tu wpisujemy graf początkowy w formacie DOT
+--END--
+--NewProduction--
+--LeftSide--
+NewProduction - incjalizuje nową produkcje, ktora zaczyna sie od podania grafu lewej strony produkcji
+--RightSide--
+nastepnie grafu prawej strony produkcji
+--Embedding--
+i na koncu transformacje osadzenia, nastepnie mozna przejść do dalszego wprwadzania produkcji lub kolejnosci ich wykonania
+--END--
+--ProductionSeries--
+tu wprowadzamy ciąg produkcji:  nr_produkcji_1,source_id;nr_produkcji_2,...
+--END--

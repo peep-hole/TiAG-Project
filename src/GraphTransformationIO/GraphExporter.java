@@ -1,4 +1,4 @@
-package GraphExporter;
+package GraphTransformationIO;
 
 import GraphElements.Vertex;
 import org.jgrapht.graph.DefaultEdge;
@@ -11,11 +11,11 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class graphExporter {
+public class GraphExporter {
 
     private final DOTExporter<Vertex, DefaultEdge> exporter;
 
-    public graphExporter() {
+    public GraphExporter() {
         exporter = new DOTExporter<>();
         exporter.setVertexIdProvider(v -> String.valueOf(v.getId()));
         exporter.setVertexAttributeProvider(v -> {

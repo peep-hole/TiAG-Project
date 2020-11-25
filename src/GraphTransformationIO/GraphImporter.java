@@ -1,4 +1,4 @@
-package GraphReader;
+package GraphTransformationIO;
 
 import GraphElements.Vertex;
 import org.jgrapht.graph.DefaultEdge;
@@ -7,11 +7,11 @@ import org.jgrapht.nio.dot.DOTImporter;
 import java.io.File;
 
 
-public class graphImporter {
+public class GraphImporter {
 
     private final DOTImporter<Vertex, DefaultEdge> importer;
 
-    public graphImporter() {
+    public GraphImporter() {
 
         importer = new DOTImporter<>();
         importer.addVertexAttributeConsumer((p, attrValue) -> {
