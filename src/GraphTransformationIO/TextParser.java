@@ -9,6 +9,7 @@ import org.jgrapht.graph.SimpleGraph;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -36,6 +37,8 @@ public class TextParser {
                         pw.println(scanner.nextLine());
                     }
                     pw.close();
+                    GraphImporter importer = new GraphImporter();
+                    importer.importIt(graph, init);
                     scanner.nextLine();
                 }
 
@@ -47,6 +50,7 @@ public class TextParser {
 
                     String leftName = "leftSide" + number + ".gv";
                     File leftSide = new File(leftName);
+                    if(!leftSide.createNewFile()) throw new IOException("File: " + leftName + " cannot be created");
                     PrintWriter pw1 = new PrintWriter(leftSide);
 
                     while(scanner.hasNext() && !scanner.hasNext("--RightSide--")) {
@@ -58,6 +62,7 @@ public class TextParser {
 
                     String rightName = "rightSide" + number + ".gv";
                     File rightSide = new File(rightName);
+                    if(!rightSide.createNewFile()) throw new IOException("File: " + rightName + " cannot be created");
                     PrintWriter pw2 = new PrintWriter(rightSide);
 
                     while(scanner.hasNext() && !scanner.hasNext("--Embedding--")) {
@@ -69,6 +74,7 @@ public class TextParser {
 
                     String embName = "embedding" + number + ".gv";
                     File embedding = new File(embName);
+                    if(!embedding.createNewFile()) throw new IOException("File: " + embName + " cannot be created");
                     PrintWriter pw3 = new PrintWriter(embedding);
 
                     while(scanner.hasNext() && !scanner.hasNext("--END--")) {
@@ -100,7 +106,9 @@ public class TextParser {
 
     private void parseProductionSeries(String[] prodSeries, List<ProductionSeriesElement> resultSeries) {
         for(String prod : prodSeries) {
-            //......do implementacji
+            int[] split = Arrays.stream(prod.split(",")).mapToInt(Integer::parseInt).toArray();
+            resultSeries.add(new ProductionSeriesElement(split[0], split[1]));
+
         }
 
 

@@ -20,7 +20,7 @@ public class Vertex {
     @Override
     public int hashCode()
     {
-        return (id*7);
+        return id*7;
     }
 
     @Override

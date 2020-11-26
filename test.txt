@@ -1,0 +1,131 @@
+--InitialGraph--
+strict graph G {
+  0 [ label="X" ];
+  1 [ label="a" ];
+  2 [ label="b" ];
+  3 [ label="c" ];
+  4 [ label="d" ];
+  0 -- 1;
+  0 -- 2;
+  0 -- 3;
+  0 -- 4;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph G {
+  0 [ label="X" ];
+}
+--RightSide--
+strict graph G {
+  0 [ label="Y" ];
+  1 [ label="a" ];
+  2 [ label="c" ];
+  0 -- 1;
+  0 -- 2;
+}
+--Embedding--
+strict graph G {
+  0 [ label="X" ];
+  1 [ label="a" ];
+  2 [ label="b" ];
+  3 [ label="c" ];
+  4 [ label="d" ];
+  5 [ label="Y" ];
+  6 [ label="Y" ];
+  1 -- 5;
+  2 -- 3;
+  3 -- 5;
+  4 -- 1;
+  0 -- 3;
+  6 -- 5;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph G {
+  0 [ label="X" ];
+}
+--RightSide--
+strict graph G {
+  0 [ label="X" ];
+  1 [ label="b" ];
+  2 [ label="d" ];
+  0 -- 1;
+  0 -- 2;
+}
+--Embedding--
+strict graph G {
+  0 [ label="X" ];
+  1 [ label="a" ];
+  2 [ label="b" ];
+  3 [ label="c" ];
+  4 [ label="d" ];
+  5 [ label="Y" ];
+  6 [ label="X" ]
+  1 -- 2;
+  2 -- 0;
+  3 -- 4;
+  4 -- 0;
+  6 -- 2;
+  5 -- 0;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph G {
+  0 [ label="Y" ];
+}
+--RightSide--
+strict graph G {
+  0 [ label="Y" ];
+  1 [ label="X" ];
+  0 -- 1;
+}
+--Embedding--
+strict graph G {
+  0 [ label="X" ];
+  1 [ label="a" ];
+  2 [ label="b" ];
+  3 [ label="c" ];
+  4 [ label="d" ];
+  5 [ label="Y" ];
+  6 [ label="X" ];
+  7 [ label="Y" ];
+  1 -- 0;
+  2 -- 5;
+  3 -- 0;
+  4 -- 5;
+  6 -- 0;
+  7 -- 5;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph G {
+  0 [ label="Y" ];
+}
+--RightSide--
+strict graph G {
+  0 [ label="c" ];
+}
+--Embedding--
+strict graph G {
+  0 [ label="X" ];
+  1 [ label="a" ];
+  2 [ label="b" ];
+  3 [ label="c" ];
+  4 [ label="d" ];
+  5 [ label="Y" ];
+  6 [ label="c" ];
+  1 -- 6;
+  2 -- 6;
+  3 -- 6;
+  4 -- 6;
+  0 -- 6;
+  5 -- 6;
+}
+--END--
+--ProductionSeries--
+0,2;0,1;0,3;0,4
+--END--

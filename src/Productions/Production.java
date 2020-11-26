@@ -25,8 +25,10 @@ public class Production {
     }
 
     public void parseProduction(File leftSide, File rightSide, File embedding) {
-        leftSideProductionGraph = new SimpleGraph<>(new VertexSupplier(), SupplierUtil.createDefaultEdgeSupplier(), false);
-        rightSideProductionGraph = new SimpleGraph<>(new VertexSupplier(), SupplierUtil.createDefaultEdgeSupplier(), false);
+        leftSideProductionGraph = new SimpleGraph<>(new VertexSupplier(),
+                SupplierUtil.createDefaultEdgeSupplier(), false);
+        rightSideProductionGraph = new SimpleGraph<>(new VertexSupplier(),
+                SupplierUtil.createDefaultEdgeSupplier(), false);
         transformations = new LinkedList<>();
 
         GraphImporter importer = new GraphImporter();
@@ -34,7 +36,8 @@ public class Production {
         importer.importIt(leftSideProductionGraph, leftSide);
         importer.importIt(rightSideProductionGraph, rightSide);
 
-        SimpleGraph<Vertex,DefaultEdge> embeddingGraph = new SimpleGraph<>(new VertexSupplier(), SupplierUtil.createDefaultEdgeSupplier(), false);
+        SimpleGraph<Vertex,DefaultEdge> embeddingGraph = new SimpleGraph<>(new VertexSupplier(),
+                SupplierUtil.createDefaultEdgeSupplier(), false);
         importer.importIt(embeddingGraph, embedding);
 
         parseEmbeddingTransformations(embeddingGraph);
@@ -64,7 +67,7 @@ public class Production {
         Vertex result = null;
 
         for(Vertex vertex: graph.vertexSet()) {
-            if(vertex.equals(new Vertex(id, label))) result = vertex;
+            if((vertex.getId() == id)&&(vertex.getLabel().equals(label))) result = vertex;
         }
 
         return result;
@@ -76,13 +79,34 @@ public class Production {
         // missing id after deletion is going to be signed to first vertex from rightSideGraph
 
         int missingID = leftSide.getId();
-        List<Vertex> neighbours = neighborListOf(graph, leftSide);
-        graph.removeVertex(leftSide);
+        Vertex likeLeft = null;
+        for(Vertex vertex: graph.vertexSet()) {
+            if((vertex.getId() == leftSide.getId())&&(vertex.getLabel().equals(leftSide.getLabel()))) likeLeft = vertex;
+        }
+        List<Vertex> neighbours = neighborListOf(graph, likeLeft);
+        graph.removeVertex(likeLeft);
         List<Vertex> vertices = new ArrayList<>(rightSideProductionGraph.vertexSet());
         for(int i = 1; i <= vertices.size(); i++) {
             vertices.get(i-1).setId(maxID+i);
             graph.addVertex(vertices.get(i-1));
         }
+
+        Vertex forSubs = new Vertex(missingID, vertices.get(0).getLabel());
+        graph.removeVertex(vertices.get(0));
+        vertices.remove(0);
+        vertices.add(forSubs);
+        graph.addVertex(forSubs);
+
+        for(DefaultEdge edge : rightSideProductionGraph.edgeSet()) {
+            if (rightSideProductionGraph.getEdgeSource(edge).getLabel().equals(forSubs.getLabel())) {
+                graph.addEdge(forSubs, rightSideProductionGraph.getEdgeTarget(edge));
+            }
+            else if (rightSideProductionGraph.getEdgeTarget(edge).getLabel().equals(forSubs.getLabel())) {
+                graph.addEdge(rightSideProductionGraph.getEdgeSource(edge), forSubs);
+            }
+            else graph.addEdge(rightSideProductionGraph.getEdgeSource(edge),rightSideProductionGraph.getEdgeTarget(edge));
+        }
+
         for(Vertex neighbour : neighbours) {
            for(EmbeddingTransformation transformation: transformations ) {
                if(transformation.from.equals(neighbour.getLabel())){
@@ -94,7 +118,6 @@ public class Production {
                }
            }
         }
-        vertices.get(0).setId(missingID);
     }
 
     private void parseEmbeddingTransformations(SimpleGraph<Vertex, DefaultEdge> graph) {
@@ -102,5 +125,26 @@ public class Production {
         for(DefaultEdge edge: edgeSet) {
             transformations.add(new EmbeddingTransformation(graph.getEdgeSource(edge).getLabel(),graph.getEdgeTarget(edge).getLabel()));
         }
+    }
+
+    @Override
+    public String toString() {
+        String s1;
+        if(leftSideProductionGraph == null) s1 = "|L:Null|";
+        else s1 ="|L:" + leftSideProductionGraph.toString() + "|";
+        String s2;
+        if(rightSideProductionGraph == null) s2 = "|R:Null|";
+        else s2 ="|R:" + rightSideProductionGraph.toString() + "|";
+
+        String embS ="EmbS: ";
+
+        for(EmbeddingTransformation emb : transformations) {
+            if(emb.from == null) embS = embS + "Null";
+            else embS = embS + emb.from;
+            if(emb.to == null) embS = embS + "Null";
+            else embS = embS + emb.to;
+            embS = embS + "--";
+        }
+        return s1 + s2 + embS;
     }
 }
