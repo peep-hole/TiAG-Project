@@ -42,9 +42,6 @@ public class LauncherAssistant {
 
         for(ProductionSeriesElement seriesElement : productionSeries) {
 
-//            System.out.println(productions.get(seriesElement.getProductionNumber()) +
-//                    (new Integer(seriesElement.getVertexID())).toString());
-
             productions.get(seriesElement.getProductionNumber()-1).applyOn(graph,seriesElement.getVertexID());
             saveGraph(graph, "Epoch"+ numberOfEpoch.getAndIncrement()+".gv");
         }

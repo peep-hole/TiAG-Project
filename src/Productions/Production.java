@@ -85,17 +85,18 @@ public class Production {
         }
         List<Vertex> neighbours = neighborListOf(graph, likeLeft);
         graph.removeVertex(likeLeft);
+
         List<Vertex> vertices = new ArrayList<>(rightSideProductionGraph.vertexSet());
-        for(int i = 1; i <= vertices.size(); i++) {
-            vertices.get(i-1).setId(maxID+i);
-            graph.addVertex(vertices.get(i-1));
+
+        vertices.get(0).setId(missingID);
+        graph.addVertex(vertices.get(0));
+        Vertex forSubs = vertices.get(0);
+
+        for(int i = 1; i < vertices.size(); i++) {
+            vertices.get(i).setId(maxID+i);
+            graph.addVertex(vertices.get(i));
         }
 
-        Vertex forSubs = new Vertex(missingID, vertices.get(0).getLabel());
-        graph.removeVertex(vertices.get(0));
-        vertices.remove(0);
-        vertices.add(forSubs);
-        graph.addVertex(forSubs);
 
         for(DefaultEdge edge : rightSideProductionGraph.edgeSet()) {
             if (rightSideProductionGraph.getEdgeSource(edge).getLabel().equals(forSubs.getLabel())) {
