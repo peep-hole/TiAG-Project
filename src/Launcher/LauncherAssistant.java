@@ -6,6 +6,7 @@ import GraphTransformationIO.TextParser;
 import GraphTransformationIO.GraphExporter;
 import Productions.Production;
 import Productions.ProductionSeriesElement;
+import Statistics.Stats;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.util.SupplierUtil;
@@ -22,6 +23,14 @@ public class LauncherAssistant {
 
     public static AtomicInteger numberOfEpoch = new AtomicInteger(1);
 
+    public static ArrayList<String> images;
+    public static ArrayList<Stats> stats = new ArrayList<Stats>();
+
+
+    public static ArrayList<String> getImages() {
+        return images;
+    }
+
     public LauncherAssistant(){}
 
     public void readAndRun(String pathName) throws IOException {
@@ -37,15 +46,23 @@ public class LauncherAssistant {
 
         (new TextParser(file)).read(graph, productions, productionSeries);
 
-
         // running productions
 
         for(ProductionSeriesElement seriesElement : productionSeries) {
 
             productions.get(seriesElement.getProductionNumber()-1).applyOn(graph,seriesElement.getVertexID());
             saveGraph(graph, "Epoch"+ numberOfEpoch.getAndIncrement()+".gv");
+            // brzydko ale nie wiem jak inaczej
+            SimpleGraph temp = (SimpleGraph) graph.clone();
+            // lista statystyk dla kolejnych produkcji
+            stats.add(new Stats(temp));
+
         }
 
+    }
+
+    public static ArrayList<Stats> getStats() {
+        return stats;
     }
 
     public void saveGraph(SimpleGraph<Vertex, DefaultEdge> graph, String pathName) {
