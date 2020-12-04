@@ -16,6 +16,7 @@ import javax.swing.*;
 public class Launcher extends JFrame{
 
     public ArrayList<Stats> stats;
+    boolean next = false;
 
     public void launchFile() throws IOException {
         LauncherAssistant assistant = new LauncherAssistant();
@@ -25,9 +26,7 @@ public class Launcher extends JFrame{
 
     }
     // funkcja która wyświetla okno i statystyki
-    public void buildGUI(Stats stat, int i){
-        Container c = this.getContentPane();
-        c.setLayout(new BorderLayout());
+    public void buildGUI(Stats stat, int i,Container c){
 
         //panel south dla statystyk
         JPanel panelSouth = new JPanel();
@@ -39,17 +38,17 @@ public class Launcher extends JFrame{
         JLabel label1 = new JLabel();
         label1.setText(String.valueOf("Produkcja: " + i));
         JLabel label2 = new JLabel();
-        label2.setText(String.valueOf("Ilosc krawedzi: " + stat.edgeCounter()));
+        label2.setText(String.valueOf("Ilość wierzchołków: " + stat.vertexCounter()));
         JLabel label3 = new JLabel();
-        label3.setText(String.valueOf("Ilosc silnie spojnych skaldowych: " + stat.stronglyConnectedComponents()));
+        label3.setText(String.valueOf("Ilość krawędzi: " + stat.edgeCounter()));
         JLabel label4 = new JLabel();
-        label4.setText(String.valueOf("Ilosc wierzchołkow: " + stat.vertexCounter()));
+        label4.setText(String.valueOf("Ilość silnie spójnych składowych: " + stat.stronglyConnectedComponents()));
         JLabel label5 = new JLabel();
         label5.setText(String.valueOf("Średni stopień wierzchołka: " + stat.averageDegree()));
         JLabel label6 = new JLabel();
-        label6.setText(String.valueOf("Średni stopień wierzchołka: " + stat.averageVDegree()));
+        label6.setText(String.valueOf("Średni stopień wierzchołka {a,b,c,d}: " + stat.averageVDegree()));
         JLabel label7 = new JLabel();
-        label7.setText(String.valueOf("Średni stopień wierzchołka: " + stat.averageNumberSCC()));
+        label7.setText(String.valueOf("Średnia liczba węzłów w składowej spójnej: " + stat.averageNumberSCC()));
 
         statistics.add(label1);
         statistics.add(label2);
@@ -70,21 +69,46 @@ public class Launcher extends JFrame{
 
     public Launcher() throws IOException {
         launchFile();
+        Container c = this.getContentPane();
+        c.setLayout(new BorderLayout());
+        this.setVisible(true);
+        this.setResizable(false);
+
+//        Box itemBox = Box.createHorizontalBox();
+
+        JButton button = new JButton("Następna produkcja");
+
+//        itemBox.add(button);
+
+
+        c.add(button,BorderLayout.NORTH);
 
         setTitle("Transformacje grafowe");
         setSize(750, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                next = true;
+
+            }
+        });
+
         // kazda iteracja to kolejna produkcja
-        for(int i= 0; i < stats.size(); i++ ) {
+        for(int i = 0; i < stats.size(); i++ ) {
+            next = false;
 
-            buildGUI(stats.get(i),i+1);
+            buildGUI(stats.get(i), i+1,c);
 
-            try {
-                Thread.sleep(4000); //kolejna produkcja pojawia się co 4 sekundy, można by to zmienić na JButton
-            } catch (InterruptedException ie) {
-                Thread.currentThread().interrupt();
+            while(!next) {
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
             }
 
         }
