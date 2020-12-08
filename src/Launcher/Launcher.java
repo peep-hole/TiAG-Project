@@ -16,12 +16,12 @@ import javax.swing.*;
 public class Launcher extends JFrame{
 
     public ArrayList<Stats> stats;
-    int i=0;
+    private int i=0;
 
     public void launchFile() throws IOException {
         LauncherAssistant assistant = new LauncherAssistant();
 
-        assistant.readAndRun("test.txt");
+        assistant.readAndRun("prezentacja.txt");
         stats = LauncherAssistant.getStats();
 
     }

@@ -2,7 +2,7 @@ package Productions;
 
 import GraphElements.Vertex;
 import GraphElements.VertexSupplier;
-import GraphTransformationIO.GraphImporter;
+import GraphTransformationIO.*;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.util.SupplierUtil;
@@ -99,13 +99,7 @@ public class Production {
 
 
         for(DefaultEdge edge : rightSideProductionGraph.edgeSet()) {
-            if (rightSideProductionGraph.getEdgeSource(edge).getLabel().equals(forSubs.getLabel())) {
-                graph.addEdge(forSubs, rightSideProductionGraph.getEdgeTarget(edge));
-            }
-            else if (rightSideProductionGraph.getEdgeTarget(edge).getLabel().equals(forSubs.getLabel())) {
-                graph.addEdge(rightSideProductionGraph.getEdgeSource(edge), forSubs);
-            }
-            else graph.addEdge(rightSideProductionGraph.getEdgeSource(edge),rightSideProductionGraph.getEdgeTarget(edge));
+            graph.addEdge(rightSideProductionGraph.getEdgeSource(edge),rightSideProductionGraph.getEdgeTarget(edge));
         }
 
         for(Vertex neighbour : neighbours) {

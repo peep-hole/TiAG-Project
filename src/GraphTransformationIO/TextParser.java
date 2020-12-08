@@ -3,6 +3,7 @@ package GraphTransformationIO;
 import GraphElements.Vertex;
 import Productions.Production;
 import Productions.ProductionSeriesElement;
+import Statistics.Stats;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
@@ -24,7 +25,7 @@ public class TextParser {
     }
 
     public void read(SimpleGraph<Vertex, DefaultEdge> graph, List<Production> productions,
-                     List<ProductionSeriesElement> productionSeries) throws IOException {
+                      List<ProductionSeriesElement> productionSeries) throws IOException {
         Scanner scanner = new Scanner(file);
 
         while (scanner.hasNext()) {

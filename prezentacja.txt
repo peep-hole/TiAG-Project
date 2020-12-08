@@ -1,0 +1,337 @@
+--InitialGraph--
+strict graph G_0 {
+       v1 -- v2;
+       v2 -- v3;
+       v3 -- v1;
+       v1 [label="A"];
+       v2 [label="B"];
+       v3 [label="C"];
+       }
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_1 {
+       v1 [label="A"];
+       }
+--RightSide--
+strict graph RHS_1 {
+       v1 -- v2;
+       v2 -- v3;
+       v3 -- v1;
+       v1 [label="A"];
+       v2 [label="A"];
+       v3 [label="A"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="A" ];
+  6 -- 0;
+  3 -- 0;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_2 {
+       v1 [label="A"];
+       }
+--RightSide--
+strict graph RHS_2 {
+       v1 -- v2;
+       v2 -- v3;
+       v3 -- v1;
+       v1 [label="C"];
+       v2 [label="B"];
+       v3 [label="B"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="B" ];
+  7 [ label="C" ];
+  6 -- 1;
+  7 -- 2;
+  4 -- 1;
+  5 -- 2;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_3 {
+       v1 [label="A"];
+       }
+--RightSide--
+strict graph RHS_3 {
+       v1 -- v2;
+       v2 -- v3;
+       v3 -- v1;
+       v1 [label="A"];
+       v2 [label="B"];
+       v3 [label="C"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="A" ];
+  7 [ label="B" ];
+  8 [ label="C" ];
+  6 -- 0;
+  7 -- 1;
+  8 -- 2;
+  3 -- 0;
+  4 -- 1;
+  5 -- 2;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_4 {
+       v1 [label="A"];
+       }
+--RightSide--
+strict graph RHS_4 {
+       v1 [label="a"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="a" ];
+  1 -- 6;
+  2 -- 6;
+  4 -- 6;
+  5 -- 6;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_5 {
+       v1 [label="B"];
+       }
+--RightSide--
+strict graph RHS_5 {
+       v1 [label="b"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="b" ];
+  0 -- 6;
+  2 -- 6;
+  3 -- 6;
+  5 -- 6;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_6 {
+       v1 [label="C"];
+       }
+--RightSide--
+strict graph RHS_6 {
+       v1 [label="c"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="c" ];
+  1 -- 6;
+  0 -- 6;
+  4 -- 6;
+  3 -- 6;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_7 {
+       v1 [label="A"];
+       }
+--RightSide--
+strict graph RHS_7 {
+       v1 -- v2;
+       v1 [label="A"];
+       v2 [label="B"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="B" ];
+  7 [ label="A" ];
+  0 -- 6;
+  1 -- 7;
+  3 -- 6;
+  4 -- 7;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_8 {
+       v1 [label="A"];
+       }
+--RightSide--
+strict graph RHS_8 {
+       v1 -- v2;
+       v1 [label="A"];
+       v2 [label="C"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="C" ];
+  7 [ label="A" ];
+  0 -- 6;
+  2 -- 7;
+  3 -- 6;
+  5 -- 7;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_9 {
+       v1 [label="B"];
+       }
+--RightSide--
+strict graph RHS_9 {
+       v1 -- v2;
+       v1 [label="B"];
+       v2 [label="A"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="B" ];
+  7 [ label="A" ];
+  0 -- 6;
+  1 -- 7;
+  3 -- 6;
+  4 -- 7;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_10 {
+       v1 [label="B"];
+       }
+--RightSide--
+strict graph RHS_10 {
+       v1 -- v2;
+       v1 [label="B"];
+       v2 [label="C"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="B" ];
+  7 [ label="C" ];
+  2 -- 6;
+  1 -- 7;
+  5 -- 6;
+  4 -- 7;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_11 {
+       v1 [label="C"];
+       }
+--RightSide--
+strict graph RHS_11 {
+       v1 -- v2;
+       v1 [label="C"];
+       v2 [label="A"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="C" ];
+  7 [ label="A" ];
+  0 -- 6;
+  2 -- 7;
+  3 -- 6;
+  5 -- 7;
+}
+--END--
+--NewProduction--
+--LeftSide--
+strict graph LHS_12 {
+       v1 [label="C"];
+       }
+--RightSide--
+strict graph RHS_12 {
+       v1 -- v2;
+       v1 [label="C"];
+       v2 [label="B"];
+       }
+--Embedding--
+strict graph G {
+  0 [ label="A" ];
+  1 [ label="B" ];
+  2 [ label="C" ];
+  3 [ label="a" ];
+  4 [ label="b" ];
+  5 [ label="c" ];
+  6 [ label="B" ];
+  7 [ label="C" ];
+  2 -- 6;
+  1 -- 7;
+  5 -- 6;
+  4 -- 7;
+}
+--END--
+--ProductionSeries--
+0,3;0,1;6,2;5,4;3,5;4,6;0,7;0,8;1,9;1,10;2,11;2,12
+--END--

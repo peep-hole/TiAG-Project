@@ -2,8 +2,8 @@ package Launcher;
 
 import GraphElements.Vertex;
 import GraphElements.VertexSupplier;
-import GraphTransformationIO.TextParser;
 import GraphTransformationIO.GraphExporter;
+import GraphTransformationIO.TextParser;
 import Productions.Production;
 import Productions.ProductionSeriesElement;
 import Statistics.Stats;
