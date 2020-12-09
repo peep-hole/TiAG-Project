@@ -51,8 +51,23 @@ public class Production {
 
         for(Vertex vertex: graph.vertexSet()) if(vertex.getId() > maxID) maxID = vertex.getId();
 
-        Vertex leftSide = findSubGraph(graph, id);
-        substituteWithRightSide(graph,leftSide, maxID);
+        Vertex leftSide = new Vertex();
+        leftSide.setId(-1);
+
+        if(id == -1) {
+            // getting wanted label
+            String label = null;
+            for(Vertex vertex:leftSideProductionGraph.vertexSet()) {
+                label = vertex.getLabel();
+            }
+            for(Vertex vertex: graph.vertexSet()) {
+                if((vertex.getLabel().equals(label))&&(vertex.getId() > leftSide.getId())) leftSide = vertex;
+            }
+        }
+        else {
+            leftSide = findSubGraph(graph, id);
+        }
+        if(leftSide != null) substituteWithRightSide(graph,leftSide, maxID);
 
 
     }
