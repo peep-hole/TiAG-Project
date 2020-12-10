@@ -2,15 +2,16 @@ package Launcher;
 
 import GraphElements.Vertex;
 import GraphElements.VertexSupplier;
-import GraphTransformationIO.GraphExporter;
 import GraphTransformationIO.TextParser;
+import GraphTransformationIO.GraphExporter;
 import Productions.Production;
 import Productions.ProductionSeriesElement;
 import Statistics.Stats;
+import guru.nidi.graphviz.engine.Format;
+import guru.nidi.graphviz.engine.Graphviz;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.util.SupplierUtil;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,13 +24,17 @@ public class LauncherAssistant {
 
     public static AtomicInteger numberOfEpoch = new AtomicInteger(1);
 
-    public static ArrayList<String> images;
+    public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<Stats> stats = new ArrayList<Stats>();
-
+    public static ArrayList<Integer> productionsNumbers = new ArrayList<>();
 
     public static ArrayList<String> getImages() {
         return images;
     }
+    public static ArrayList<Stats> getStats() {
+        return stats;
+    }
+    public static ArrayList<Integer> getProductionsNumbers() { return productionsNumbers; }
 
     public LauncherAssistant(){}
 
@@ -46,28 +51,33 @@ public class LauncherAssistant {
 
         (new TextParser(file)).read(graph, productions, productionSeries);
 
+        SimpleGraph init = (SimpleGraph) graph.clone();
+        // dpdanie poczatkowego grafu do listy
+        stats.add(new Stats(init));
+        Graphviz.fromFile(new File("initialGraph.gv")).render(Format.PNG).toFile(new File("initialGraph.png"));
+        images.add("initialGraph.png");
+
         // running productions
 
         for(ProductionSeriesElement seriesElement : productionSeries) {
 
             productions.get(seriesElement.getProductionNumber()-1).applyOn(graph,seriesElement.getVertexID());
-            saveGraph(graph, "Epoch"+ numberOfEpoch.getAndIncrement()+".gv");
-            // brzydko ale nie wiem jak inaczej
+            saveGraph(graph, "Epoch"+ numberOfEpoch.getAndIncrement());
+
             SimpleGraph temp = (SimpleGraph) graph.clone();
-            // lista statystyk dla kolejnych produkcji
             stats.add(new Stats(temp));
+            productionsNumbers.add(seriesElement.getProductionNumber());
 
         }
 
     }
 
-    public static ArrayList<Stats> getStats() {
-        return stats;
-    }
-
-    public void saveGraph(SimpleGraph<Vertex, DefaultEdge> graph, String pathName) {
+    public void saveGraph(SimpleGraph<Vertex, DefaultEdge> graph, String pathName) throws IOException {
         GraphExporter exporter = new GraphExporter();
-        exporter.exportIt(graph, pathName);
+        exporter.exportIt(graph, pathName + ".gv");
+
+        Graphviz.fromFile(new File(pathName + ".gv")).render(Format.PNG).toFile(new File(pathName + ".png"));
+        images.add(pathName + ".png");
     }
 
 

@@ -1,82 +1,47 @@
 package Launcher;
 
 import Statistics.Stats;
-
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-
-import javax.swing.*;
-
-
-public class Launcher extends JFrame{
-
+public class Launcher extends JFrame {
     public ArrayList<Stats> stats;
-    private int i=0;
+    public ArrayList<String> images;
+    public ArrayList<Integer> prodNum;
+    private int i = 0;
 
+    //function for launching LauncherAssistant to run productions on "prezentacja.txt" file
     public void launchFile() throws IOException {
         LauncherAssistant assistant = new LauncherAssistant();
 
         assistant.readAndRun("prezentacja.txt");
+
+        //getter for statistics array
         stats = LauncherAssistant.getStats();
-
-    }
-    // funkcja która wyświetla okno i statystyki
-    public void buildGUI(Stats stat, int i,Container c){
-
-        //panel south dla statystyk
-        JPanel panelSouth = new JPanel();
-        panelSouth.setLayout(new BorderLayout());
-        JPanel statistics = new JPanel();
-        statistics.setLayout( new GridLayout(7, 7));
-
-        // poszczegolne statystyki
-        JLabel label1 = new JLabel();
-        label1.setText(String.valueOf("Ostatnio wykonana produkcja: " + i));
-        JLabel label2 = new JLabel();
-        label2.setText(String.valueOf("Ilosc krawedzi: " + stat.edgeCounter()));
-        JLabel label3 = new JLabel();
-        label3.setText(String.valueOf("Ilosc silnie spojnych skaldowych: " + stat.stronglyConnectedComponents()));
-        JLabel label4 = new JLabel();
-        label4.setText(String.valueOf("Ilosc wierzchołkow: " + stat.vertexCounter()));
-        JLabel label5 = new JLabel();
-        label5.setText(String.valueOf("Średni stopień wierzchołka: " + stat.averageDegree()));
-        JLabel label6 = new JLabel();
-        label6.setText(String.valueOf("Średni stopień wierzchołka: " + stat.averageVDegree()));
-        JLabel label7 = new JLabel();
-        label7.setText(String.valueOf("Średni stopień wierzchołka: " + stat.averageNumberSCC()));
-
-        statistics.add(label1);
-        statistics.add(label2);
-        statistics.add(label3);
-        statistics.add(label4);
-        statistics.add(label5);
-        statistics.add(label6);
-        statistics.add(label7);
-
-        panelSouth.add(statistics, BorderLayout.NORTH);
-
-        c.add(panelSouth, BorderLayout.SOUTH);
-
-        this.setVisible(true);
-        this.setResizable(false);
-
+        //getter for paths to png with graphs
+        images = LauncherAssistant.getImages();
+        //getter for productions id
+        prodNum = LauncherAssistant.getProductionsNumbers();
     }
 
     public Launcher() throws IOException {
         launchFile();
-        Container c = this.getContentPane();
-        c.setLayout(new BorderLayout());
-        this.setVisible(true);
-        this.setResizable(false);
+        //tworzenie jframe i ustawienia różne
+        JFrame jf = new JFrame();
+        jf.setTitle("Transformacje grafowe");
+        jf.setLayout(new BorderLayout());
+        jf.setSize(800, 600);
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setLocationRelativeTo(null);
 
+        //utworzenie horizontal boxa na przyciski
         Box itemBox = Box.createHorizontalBox();
-
-        JButton button1 = new JButton("Start");
+        //utworzenie kolejnych przycikow i dodanie ich do boxa
+        JButton button1 = new JButton("Początkowy graf");
         JButton button2 = new JButton("Poprzednia produkcja");
         JButton button3 = new JButton("Następna produkcja");
 
@@ -84,45 +49,95 @@ public class Launcher extends JFrame{
         itemBox.add(button2);
         itemBox.add(button3);
 
-        c.add(itemBox,BorderLayout.NORTH);
+        //dodanie boxa do ramki na północy
+        jf.add(itemBox,BorderLayout.NORTH);
+        jf.setVisible(true);
 
-        setTitle("Transformacje grafowe");
-        setSize(750, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+        //zdefiniowane akcje dla poszczególnych przycisków
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buildGUI(stats.get(0),1,c);
+                i=0;
+                setFrame(jf,stats.get(0),images.get(0));
+                repaint();
             }
         });
-        //dodac obsluge wyjątków
+
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(i-1>=0){
+                if(i>=2){
                     i-=1;
-                    buildGUI(stats.get(i),i+1,c);
+                    setFrame(jf,stats.get(i),images.get(i));
+                    repaint();
                 }
 
             }
         });
-        //dodac obsluge wyjątków
+
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(i+1<stats.size()){
                     i+=1;
-                    buildGUI(stats.get(i),i+1,c);
+                    setFrame(jf,stats.get(i),images.get(i));
+                    repaint();
+
                 }
             }
         });
+    }
 
+    // funkcja odpowiadająca za ustawienie ramki dla poszczególnej produkcji (grafu)
+    public void setFrame(JFrame jf, Stats stat,String filename){
+        //stworzenie panelu dla statystyk
+        JPanel statistics = new JPanel();
+        statistics.setLayout( new GridLayout(8, 8));
+        statistics.setBackground(Color.WHITE);
+
+        //dodanie wszytskich statystyk
+        JLabel label1 = new JLabel();
+        if(i!=0) label1.setText(String.valueOf("Ostatnio wykonana produkcja: " + prodNum.get(i-1)));
+        System.out.println(i);
+        JLabel label2 = new JLabel();
+        label2.setText(String.valueOf("Ilość wierzchołków: " + stat.vertexCounter()));
+        JLabel label3 = new JLabel();
+        label3.setText(String.valueOf("Ilość krawędzi: " + stat.edgeCounter()));
+        JLabel label4 = new JLabel();
+        label4.setText(String.valueOf("Ilość silnie spójnych skałdowych: " + stat.stronglyConnectedComponents()));
+        JLabel label5 = new JLabel();
+        label5.setText(String.valueOf("Średni stopień wierzchołka: " + stat.averageDegree()));
+        JLabel label6 = new JLabel();
+        label6.setText(String.valueOf("Średni stopień wierzchołka {a,b,c,d} : " + stat.averageVDegree()));
+        JLabel label7 = new JLabel();
+        label7.setText(String.valueOf("Średnia ilość wierzchołków w spójnych składowych: " + stat.averageNumberSCC()));
+
+        statistics.repaint();
+
+        if(i!=0) statistics.add(label1,BorderLayout.CENTER);
+        statistics.add(label2,BorderLayout.CENTER);
+        statistics.add(label3);
+        statistics.add(label4);
+        statistics.add(label5);
+        statistics.add(label6);
+        statistics.add(label7);
+
+        //dodanie statystyk na poludnie ramki
+        jf.add(statistics,BorderLayout.SOUTH);
+
+        //stworzenie panelu z png grafu
+        JPanel imgPanel = new GraphPanel(filename,jf.getWidth(), jf.getHeight());
+        imgPanel.setBackground(Color.WHITE);
+
+        jf.add(imgPanel,BorderLayout.CENTER);
+
+        statistics.repaint();
+        repaint();
+        jf.setVisible(true);
     }
 
     public static void main(String[] args) throws IOException {
         new Launcher();
-    }
 
+    }
 }
