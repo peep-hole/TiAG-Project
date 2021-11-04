@@ -1,2 +1,6 @@
 # TiAG-Project
- Repository for graph transformation project
+ Project made for Graph Transformation and Algorithms course at AGH UST
+ 
+ Program reads graph and transformations from text file and than perform those transformations.
+ 
+ ![graph](https://github.com/peep-hole/TiAG-Project/blob/main/Epoch8.png)
